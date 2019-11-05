@@ -3,11 +3,16 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProduitRepository")
+ * @Vich\Uploadable
  */
 class Produit
 {
@@ -22,6 +27,18 @@ class Produit
      * @ORM\Column(type="string", length=50)
      */
     private $libelle;
+
+    /**
+     * @var string|null
+     * @Orm\Column(type="string", length=255)
+     */
+    private $filename;
+    
+    /**
+     * @var File null
+     * @Vich\UploadableField(mapping="property_image", fileNameProperty="filename")
+     */
+    private $image;
 
     /**
      * @ORM\Column(type="float")
@@ -49,20 +66,18 @@ class Produit
     private $stkinit;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $stkal;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Famille", inversedBy="produits")
      * @ORM\JoinColumn(nullable=false)
      */
     private $id_famille;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Commande", mappedBy="id_produit")
-     */
+    
     private $qty;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updated_at;
 
     public function __construct()
     {
@@ -146,17 +161,6 @@ class Produit
         return $this;
     }
 
-    public function getStkal(): ?int
-    {
-        return $this->stkal;
-    }
-
-    public function setStkal(int $stkal): self
-    {
-        $this->stkal = $stkal;
-
-        return $this;
-    }
 
     public function getIdFamille(): ?Famille
     {
@@ -194,6 +198,54 @@ class Produit
             $this->qty->removeElement($qty);
             $qty->removeIdProduit($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+    /**
+     * @param null|string $filename
+     * @return Produit
+     */
+    public function setFilename(?string $filename)
+    {
+        $this->filename = $filename;
+    }
+
+    /**
+     * @return null|File
+     */
+    public function getImage(): ?File
+    {
+        return $this->image;
+    }
+    /**
+     * @param null|File $image
+     * @return Produit
+     */
+    public function setImage(?File $image): Produit
+    {
+        $this->image = $image;
+        if ($this->image instanceof UploadedFile) {
+            $this->updated_at = new \DateTime('now');
+        }
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
 
         return $this;
     }

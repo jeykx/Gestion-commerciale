@@ -3,45 +3,38 @@
 {% block title %}Produit index{% endblock %}
 
 {% block body %}
-    <h1>Produit index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Libelle</th>
-                <th>Pa</th>
-                <th>Pv</th>
-                <th>Tva</th>
-                <th>Stock</th>
-                <th>Stkinit</th>
-                <th>Stkal</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for produit in produits %}
-            <tr>
-                <td>{{ produit.id }}</td>
-                <td>{{ produit.libelle }}</td>
-                <td>{{ produit.pa }}</td>
-                <td>{{ produit.pv }}</td>
-                <td>{{ produit.tva }}</td>
-                <td>{{ produit.stock }}</td>
-                <td>{{ produit.stkinit }}</td>
-                <td>{{ produit.stkal }}</td>
-                <td>
-                    <a href="{{ path('produit_show', {'id': produit.id}) }}">show</a>
-                    <a href="{{ path('produit_edit', {'id': produit.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<div class="container">
 
-    <a href="{{ path('produit_new') }}">Create new</a>
+    
+    <h1 class="mt-4">Liste des produits</h1>
+
+    
+    {% for produit in produits %}
+
+    
+    <div class="card mt-2">
+    <div class="row">
+{% if produit.filename %}
+  <div class="col-md-6">
+   <img src="/images/product/{{ produit.filename }}"style="width: 20%; height: auto;">
+   </div>
+
+       {%  endif %}
+<div class="col-md-6">
+    <h5 class="card-title mt-2">
+         {{ produit.libelle }}
+    <h5/>
+    
+
+    <a href="{{ path('produit_show', {'id': produit.id}) }}" class="card-link btn btn-primary">Détail du produit</a>
+    <a href="{{ path('produit_edit', {'id': produit.id}) }}" class="card-link btn btn-warning">Modifier le produit</a>
+</div>
+</div>
+</div>
+
+ {% endfor %}
+
+    <a href="{{ path('produit_new') }}" class="btn btn-warning mt-2 mb-2">Ajouter un nouveau produit</a>
+</div>
 {% endblock %}

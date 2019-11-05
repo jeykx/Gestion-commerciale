@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Commande{% endblock %}
+
+{% block body %}
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+  <i class="icon-menu"></i>
+  <h1>Ajout de commande</h1>
+  </div>
+
+  <div class="panel-body">
+  <table class="table-condensed">
+  <tr>
+     <td>Numéro commande :</td>
+     <td></td>
+     <td>Date commande :</td>
+     <td>{{ form_widget(form.dateComm) }}</td>
+  </tr>
+
+  <tr>
+     <td>Client:</td>
+     <td>{{ form_widget(form.id_client) }}</td>
+  </tr>
+  </table>
+
+  <table class="table-condensed">
+    <th class="col-md-1">Produit</th>
+    <th class="col-md-1">Prix unitaire</th>
+    <th class="col-md-1">QTY</th>
+    <th class="col-md-1">TVA</th>
+    <th class="col-md-1">Mont HT</th>
+    <th class="col-md-1">Actions</th>
+
+    <tr>
+      <td class="col-md-1">
+      {{ form_widget(f.id_produit) }}
+      </td>
+      <td class="col-md-1">
+      {{ form_widget(f.pu) }}
+      </td>
+      <td class="col-md-1">
+      {{ form_widget(f.qty) }}
+      </td>
+      <td class="col-md-1">
+      {{ form_widget(f.tva) }}
+      </td>
+      <td class="col-md-1">
+      {{ commande.tht }}
+      </td>
+
+      <td class="col-md-1">
+      <input type="submit" value="add" name="bt" class="btn btn-primary">
+      </td>
+    </tr>
+  </table>
+
+  <table class="table table-condensed mt-4">
+  <thead class="thead-dark">
+  <tr>
+    <th class="col-md-1">Désignation article</th>
+    <th class="col-md-1">PU</th>
+    <th class="col-md-1">QTY</th>
+    <th class="col-md-1">TVA</th>
+    <th class="col-md-1">Mont HT</th>
+    <th class="col-md-1">Actions</th>
+ </tr>
+ </thead>
+ <tbody>
+
+ </tbody>
+ </table>
+
+
+</div>
+</div>
+
+    <a href="{{ path('commande_index') }}">back to list</a>
+{% endblock %}

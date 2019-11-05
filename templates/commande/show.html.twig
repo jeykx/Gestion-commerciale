@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande{% endblock %}
+
+{% block body %}
+    <h1>Commande</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ commande.id }}</td>
+            </tr>
+            <tr>
+                <th>Numcom</th>
+                <td>{{ commande.numcom }}</td>
+            </tr>
+            <tr>
+                <th>DateComm</th>
+                <td>{{ commande.dateComm ? commande.dateComm|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Tht</th>
+                <td>{{ commande.tht }}</td>
+            </tr>
+            <tr>
+                <th>Ttva</th>
+                <td>{{ commande.ttva }}</td>
+            </tr>
+            <tr>
+                <th>Tttc</th>
+                <td>{{ commande.tttc }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('commande_index') }}">back to list</a>
+
+    <a href="{{ path('commande_edit', {'id': commande.id}) }}">edit</a>
+
+    {{ include('commande/_delete_form.html.twig') }}
+{% endblock %}
